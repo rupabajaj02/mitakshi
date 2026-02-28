@@ -22,6 +22,26 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "StudyPulse",
   },
+  icons: {
+    icon: [
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { rel: 'mask-icon', url: '/icon-192.png', color: '#722ed1' },
+    ],
+  },
+  applicationName: "StudyPulse",
+  keywords: ["study", "counter", "education", "kids", "learning", "memorize"],
+  authors: [{ name: "Mitakshi" }],
+  creator: "Mitakshi",
+  publisher: "Mitakshi",
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {

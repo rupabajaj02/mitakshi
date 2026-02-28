@@ -27,6 +27,12 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
     };
   }, []);
 
+  const vibrate = useCallback((pattern: number | number[]) => {
+    if (typeof window !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  }, []);
+
   const playSound = useCallback((frequency: number, duration: number) => {
     if (typeof window !== 'undefined') {
       try {
@@ -75,6 +81,7 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
 
   const handleIncrement = (): void => {
     if (count < maxCount && !isDisabled) {
+      vibrate(50);
       playSound(800, 0.15);
       setCount((prev) => prev + 1);
       startCooldown();
@@ -83,17 +90,20 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
 
   const handleDecrement = (): void => {
     if (count > MIN_COUNT) {
+      vibrate(30);
       playSound(400, 0.15);
       setCount((prev) => prev - 1);
     }
   };
 
   const showResetModal = (): void => {
+    vibrate(40);
     playSound(600, 0.15);
     setIsResetModalVisible(true);
   };
 
   const handleResetConfirm = (): void => {
+    vibrate([50, 100, 50]);
     playSound(500, 0.2);
     setCount(0);
     setIsResetModalVisible(false);
