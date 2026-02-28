@@ -119,59 +119,55 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 p-4 relative overflow-hidden">
-      {/* Animated background elements */}
+    <div className="flex min-h-screen flex-col items-center bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 p-3 relative overflow-hidden">
+      {/* Animated background elements - positioned to not overlap header */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-400 rounded-full opacity-20 blur-3xl animate-float" />
-        <div className="absolute top-40 right-20 w-40 h-40 bg-pink-400 rounded-full opacity-20 blur-3xl animate-float-delayed" />
-        <div className="absolute bottom-20 left-1/4 w-36 h-36 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-float" />
+        <div className="absolute top-1/3 left-10 w-24 h-24 bg-cyan-400 rounded-full opacity-20 blur-3xl animate-float" />
+        <div className="absolute top-2/3 right-10 w-32 h-32 bg-pink-400 rounded-full opacity-20 blur-3xl animate-float-delayed" />
+        <div className="absolute bottom-20 left-1/4 w-28 h-28 bg-yellow-400 rounded-full opacity-20 blur-3xl animate-float" />
       </div>
 
-      <div className="w-full max-w-md flex-1 flex flex-col relative z-10">
-        {/* Header - Retro Gaming Style */}
-        <header className="py-6 text-center">
-          <div className="relative inline-block">
-            <h1 className="font-['Press_Start_2P'] text-lg sm:text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] animate-glow leading-relaxed">
-              MITAKSHI'S
-            </h1>
-            <h2 className="font-['Press_Start_2P'] text-2xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 drop-shadow-[0_0_30px_rgba(255,255,255,0.7)] animate-glow-delayed mt-2 leading-relaxed">
-              STUDYPULSE
-            </h2>
-            <div className="absolute -top-2 -right-2 text-2xl animate-bounce">⚡</div>
-            <div className="absolute -bottom-2 -left-2 text-2xl animate-bounce-delayed">🎮</div>
-          </div>
+      <div className="w-full max-w-md flex flex-col relative z-10 h-screen">
+        {/* Header - Compact and Readable */}
+        <header className="py-3 text-center flex-shrink-0">
+          <h1 className="font-['Press_Start_2P'] text-sm text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] leading-relaxed">
+            MITAKSHI'S
+          </h1>
+          <h2 className="font-['Press_Start_2P'] text-lg text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.9)] mt-1 leading-relaxed">
+            STUDYPULSE
+          </h2>
         </header>
 
-        {/* Counter Display - Retro LCD Style */}
-        <div className="flex items-center justify-center py-6">
+        {/* Counter Display - Larger and More Prominent */}
+        <div className="flex items-center justify-center py-4 flex-shrink-0">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-pink-500 rounded-3xl blur-xl opacity-60 animate-pulse" />
-            <div className="relative flex h-36 w-36 items-center justify-center rounded-3xl bg-black border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)] sm:h-40 sm:w-40">
-              <span className="font-['Press_Start_2P'] text-6xl font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,1)] sm:text-7xl animate-pulse-subtle">
+            <div className="relative flex h-44 w-44 items-center justify-center rounded-3xl bg-black border-4 border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.6)] sm:h-48 sm:w-48">
+              <span className="font-['Press_Start_2P'] text-7xl font-bold text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,1)] sm:text-8xl animate-pulse-subtle">
                 {count}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Progress Bar - Gaming Style */}
-        <div className="py-4 px-6">
-          <div className="bg-black/50 rounded-full p-2 border-2 border-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.4)]">
-            <div className="flex items-center justify-between px-3">
-              <span className="font-['Press_Start_2P'] text-xs text-pink-400">LVL</span>
-              <div className="flex-1 mx-3 h-4 bg-gray-800 rounded-full overflow-hidden border border-pink-400">
+        {/* Progress Bar - Compact */}
+        <div className="py-2 px-4 flex-shrink-0">
+          <div className="bg-black/50 rounded-full p-1.5 border-2 border-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+            <div className="flex items-center justify-between px-2">
+              <span className="font-['Press_Start_2P'] text-[10px] text-pink-400">LV</span>
+              <div className="flex-1 mx-2 h-3 bg-gray-800 rounded-full overflow-hidden border border-pink-400">
                 <div 
-                  className="h-full bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 transition-all duration-500 shadow-[0_0_10px_rgba(236,72,153,0.8)]"
+                  className="h-full bg-gradient-to-r from-cyan-400 via-pink-400 to-yellow-400 transition-all duration-500 shadow-[0_0_8px_rgba(236,72,153,0.8)]"
                   style={{ width: `${(count / maxCount) * 100}%` }}
                 />
               </div>
-              <span className="font-['Press_Start_2P'] text-xs text-yellow-400">{count}/{maxCount}</span>
+              <span className="font-['Press_Start_2P'] text-[10px] text-yellow-400">{count}/{maxCount}</span>
             </div>
           </div>
         </div>
 
-        {/* Main Counter Button - MEGA Gaming Button */}
-        <div className="flex flex-1 flex-col items-center justify-center gap-6 py-4">
+        {/* Main Counter Button - Balanced Size */}
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 py-2">
           <div className="relative">
             {/* Pulsing rings animation */}
             {!isDisabled && count < maxCount && (
@@ -186,82 +182,80 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
               onClick={handleIncrement}
               disabled={count >= maxCount || isDisabled}
               className={`
-                relative z-10 flex h-72 w-72 items-center justify-center rounded-full 
-                transition-all duration-300 border-8
+                relative z-10 flex h-56 w-56 items-center justify-center rounded-full 
+                transition-all duration-300 border-6
                 ${count >= maxCount || isDisabled 
                   ? 'bg-gray-700 border-gray-600 cursor-not-allowed' 
-                  : 'bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 border-cyan-400 hover:border-pink-400 active:scale-95 cursor-pointer shadow-[0_0_60px_rgba(236,72,153,0.8)]'
+                  : 'bg-gradient-to-br from-pink-500 via-purple-600 to-indigo-600 border-cyan-400 hover:border-pink-400 active:scale-95 cursor-pointer shadow-[0_0_50px_rgba(236,72,153,0.8)]'
                 }
-                sm:h-80 sm:w-80
+                sm:h-64 sm:w-64
               `}
             >
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-2">
                 <div className="relative">
                   <PlusOutlined 
-                    className={`${count >= maxCount || isDisabled ? 'text-gray-500' : 'text-white drop-shadow-[0_0_20px_rgba(255,255,255,1)]'}`}
-                    style={{ fontSize: '140px' }} 
+                    className={`${count >= maxCount || isDisabled ? 'text-gray-500' : 'text-white drop-shadow-[0_0_15px_rgba(255,255,255,1)]'}`}
+                    style={{ fontSize: '100px' }} 
                   />
                   {!isDisabled && count < maxCount && (
                     <div className="absolute inset-0 animate-spin-slow">
-                      <div className="absolute top-0 left-1/2 w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,1)]" />
+                      <div className="absolute top-0 left-1/2 w-2.5 h-2.5 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(34,211,238,1)]" />
                     </div>
                   )}
                 </div>
-                <span className={`font-['Press_Start_2P'] text-sm tracking-wider ${count >= maxCount || isDisabled ? 'text-gray-500' : 'text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]'}`}>
+                <span className={`font-['Press_Start_2P'] text-xs tracking-wider ${count >= maxCount || isDisabled ? 'text-gray-500' : 'text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]'}`}>
                   TAP ME!
                 </span>
               </div>
             </button>
           </div>
 
-          {/* Cooldown Message */}
+          {/* Status Messages - Compact */}
           {isDisabled && cooldownTime > 0 && (
-            <div className="text-center bg-black/50 px-6 py-3 rounded-2xl border-2 border-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.5)] animate-pulse">
-              <p className="font-['Press_Start_2P'] text-base text-yellow-400 leading-relaxed">
+            <div className="text-center bg-black/50 px-4 py-2 rounded-xl border-2 border-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.5)]">
+              <p className="font-['Press_Start_2P'] text-xs text-yellow-400 leading-relaxed">
                 WAIT {cooldownTime}s
               </p>
             </div>
           )}
 
-          {/* Encouraging Message */}
           {!isDisabled && count < maxCount && (
-            <p className="font-['Press_Start_2P'] text-xs text-center text-cyan-400 animate-bounce leading-relaxed px-4">
-              👆 CLICK TO LEVEL UP! 👆
+            <p className="font-['Press_Start_2P'] text-[10px] text-center text-cyan-400 leading-relaxed px-4">
+              👆 TAP TO LEVEL UP!
             </p>
           )}
 
-          {/* Max Reached Message */}
           {count >= maxCount && (
-            <div className="text-center bg-gradient-to-r from-yellow-400 to-pink-400 px-6 py-4 rounded-2xl shadow-[0_0_30px_rgba(250,204,21,0.8)] animate-bounce">
-              <p className="font-['Press_Start_2P'] text-sm text-black leading-relaxed">
-                🎉 LEVEL MAX! 🎉
+            <div className="text-center bg-gradient-to-r from-yellow-400 to-pink-400 px-4 py-2 rounded-xl shadow-[0_0_20px_rgba(250,204,21,0.8)]">
+              <p className="font-['Press_Start_2P'] text-xs text-black leading-relaxed">
+                🎉 MAX LEVEL! 🎉
               </p>
             </div>
           )}
         </div>
 
-        {/* Control Buttons - Gaming Style */}
-        <div className="flex gap-4 pb-6">
+        {/* Control Buttons - Compact */}
+        <div className="flex gap-3 pb-4 flex-shrink-0">
           <button
             onClick={handleDecrement}
             disabled={count <= MIN_COUNT}
             className={`
-              flex-1 h-16 rounded-xl font-['Poppins'] font-bold text-base
-              border-4 transition-all duration-200
+              flex-1 h-14 rounded-xl font-['Poppins'] font-bold text-sm
+              border-3 transition-all duration-200
               ${count <= MIN_COUNT 
                 ? 'bg-gray-700 border-gray-600 text-gray-500 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-indigo-600 to-purple-600 border-cyan-400 text-white hover:border-pink-400 active:scale-95 shadow-[0_0_20px_rgba(34,211,238,0.5)]'
+                : 'bg-gradient-to-r from-indigo-600 to-purple-600 border-cyan-400 text-white hover:border-pink-400 active:scale-95 shadow-[0_0_15px_rgba(34,211,238,0.5)]'
               }
             `}
           >
-            <MinusOutlined className="mr-2" />
+            <MinusOutlined className="mr-1" />
             MINUS
           </button>
           <button
             onClick={showResetModal}
-            className="flex-1 h-16 rounded-xl font-['Poppins'] font-bold text-base bg-gradient-to-r from-pink-600 to-red-600 border-4 border-yellow-400 text-white hover:border-cyan-400 active:scale-95 shadow-[0_0_20px_rgba(250,204,21,0.5)] transition-all duration-200"
+            className="flex-1 h-14 rounded-xl font-['Poppins'] font-bold text-sm bg-gradient-to-r from-pink-600 to-red-600 border-3 border-yellow-400 text-white hover:border-cyan-400 active:scale-95 shadow-[0_0_15px_rgba(250,204,21,0.5)] transition-all duration-200"
           >
-            <ReloadOutlined className="mr-2" />
+            <ReloadOutlined className="mr-1" />
             RESET
           </button>
         </div>
@@ -269,45 +263,35 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
 
       {/* Reset Confirmation Modal */}
       <Modal
-        title={<span className="font-['Press_Start_2P'] text-sm">RESET COUNTER?</span>}
+        title={<span className="font-['Press_Start_2P'] text-xs">RESET?</span>}
         open={isResetModalVisible}
         onOk={handleResetConfirm}
         onCancel={handleResetCancel}
-        okText="YES, RESET"
-        cancelText="CANCEL"
+        okText="YES"
+        cancelText="NO"
         okButtonProps={{ danger: true, className: "font-['Poppins'] font-bold" }}
         cancelButtonProps={{ className: "font-['Poppins'] font-bold" }}
         centered
       >
-        <p className="font-['Poppins'] text-base py-4">
-          Are you sure you want to reset the counter to zero?
+        <p className="font-['Poppins'] text-sm py-3">
+          Reset counter to zero?
         </p>
       </Modal>
 
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-20px) translateX(10px); }
+          50% { transform: translateY(-15px) translateX(8px); }
         }
         
         @keyframes float-delayed {
           0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-30px) translateX(-15px); }
-        }
-        
-        @keyframes glow {
-          0%, 100% { filter: drop-shadow(0 0 20px rgba(255,255,255,0.5)); }
-          50% { filter: drop-shadow(0 0 40px rgba(255,255,255,0.9)); }
-        }
-        
-        @keyframes glow-delayed {
-          0%, 100% { filter: drop-shadow(0 0 30px rgba(255,255,255,0.7)); }
-          50% { filter: drop-shadow(0 0 50px rgba(255,255,255,1)); }
+          50% { transform: translateY(-20px) translateX(-10px); }
         }
         
         @keyframes ping-slow {
           75%, 100% {
-            transform: scale(1.4);
+            transform: scale(1.3);
             opacity: 0;
           }
         }
@@ -318,14 +302,14 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
             opacity: 0.5;
           }
           50% {
-            transform: scale(1.1);
+            transform: scale(1.08);
             opacity: 0.3;
           }
         }
         
         @keyframes pulse-subtle {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.8; }
+          50% { opacity: 0.85; }
         }
         
         @keyframes spin-slow {
@@ -333,33 +317,20 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
           to { transform: rotate(360deg); }
         }
         
-        @keyframes bounce-delayed {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        
         .animate-float {
-          animation: float 6s ease-in-out infinite;
+          animation: float 5s ease-in-out infinite;
         }
         
         .animate-float-delayed {
-          animation: float-delayed 8s ease-in-out infinite;
-        }
-        
-        .animate-glow {
-          animation: glow 2s ease-in-out infinite;
-        }
-        
-        .animate-glow-delayed {
-          animation: glow-delayed 2s ease-in-out infinite 0.5s;
+          animation: float-delayed 6s ease-in-out infinite;
         }
         
         .animate-ping-slow {
-          animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+          animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
         }
         
         .animate-pulse-ring {
-          animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          animation: pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         
         .animate-pulse-subtle {
@@ -367,11 +338,7 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
         }
         
         .animate-spin-slow {
-          animation: spin-slow 4s linear infinite;
-        }
-        
-        .animate-bounce-delayed {
-          animation: bounce-delayed 2s ease-in-out infinite 1s;
+          animation: spin-slow 3s linear infinite;
         }
       `}</style>
     </div>
