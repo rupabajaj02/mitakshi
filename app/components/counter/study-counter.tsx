@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button, Modal } from 'antd';
 import { PlusOutlined, MinusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { MAX_COUNT, MIN_COUNT, APP_TITLE } from '@/app/constants/counter';
@@ -10,23 +10,51 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
   const [count, setCount] = useState<number>(0);
   const [isResetModalVisible, setIsResetModalVisible] = useState<boolean>(false);
 
+  const playSound = useCallback((frequency: number, duration: number) => {
+    if (typeof window !== 'undefined') {
+      try {
+        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration);
+      } catch (error) {
+        // Silently handle audio context errors
+      }
+    }
+  }, []);
+
   const handleIncrement = (): void => {
     if (count < maxCount) {
+      playSound(800, 0.1);
       setCount((prev) => prev + 1);
     }
   };
 
   const handleDecrement = (): void => {
     if (count > MIN_COUNT) {
+      playSound(400, 0.1);
       setCount((prev) => prev - 1);
     }
   };
 
   const showResetModal = (): void => {
+    playSound(600, 0.1);
     setIsResetModalVisible(true);
   };
 
   const handleResetConfirm = (): void => {
+    playSound(500, 0.15);
     setCount(0);
     setIsResetModalVisible(false);
   };
@@ -60,10 +88,10 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
             type="primary"
             shape="circle"
             size="large"
-            icon={<PlusOutlined />}
+            icon={<PlusOutlined style={{ fontSize: '48px' }} />}
             onClick={handleIncrement}
             disabled={count >= maxCount}
-            className="h-24 w-24 text-2xl shadow-lg hover:scale-105 active:scale-95 transition-transform"
+            className="h-32 w-32 shadow-lg hover:scale-105 active:scale-95 transition-transform sm:h-36 sm:w-36"
             style={{
               backgroundColor: count >= maxCount ? '#d9d9d9' : '#722ed1',
               borderColor: count >= maxCount ? '#d9d9d9' : '#722ed1',
