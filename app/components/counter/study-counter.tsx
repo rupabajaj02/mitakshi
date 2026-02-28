@@ -1,19 +1,40 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Button, Modal } from 'antd';
 import { PlusOutlined, MinusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { MAX_COUNT, MIN_COUNT, APP_TITLE } from '@/app/constants/counter';
 import type { CounterProps } from '@/app/types/counter';
 
+const CLICK_COOLDOWN = 5000; // 5 seconds in milliseconds
+
 export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
   const [count, setCount] = useState<number>(0);
   const [isResetModalVisible, setIsResetModalVisible] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [cooldownTime, setCooldownTime] = useState<number>(0);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const cooldownTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (cooldownTimerRef.current) {
+        clearInterval(cooldownTimerRef.current);
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, []);
 
   const playSound = useCallback((frequency: number, duration: number) => {
     if (typeof window !== 'undefined') {
       try {
-        const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+        if (!audioContextRef.current) {
+          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        }
+        
+        const audioContext = audioContextRef.current;
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
         
@@ -34,29 +55,53 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
     }
   }, []);
 
+  const startCooldown = useCallback(() => {
+    setIsDisabled(true);
+    setCooldownTime(CLICK_COOLDOWN / 1000);
+
+    const interval = setInterval(() => {
+      setCooldownTime((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setIsDisabled(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    cooldownTimerRef.current = interval;
+  }, []);
+
   const handleIncrement = (): void => {
-    if (count < maxCount) {
-      playSound(800, 0.1);
+    if (count < maxCount && !isDisabled) {
+      playSound(800, 0.15);
       setCount((prev) => prev + 1);
+      startCooldown();
     }
   };
 
   const handleDecrement = (): void => {
     if (count > MIN_COUNT) {
-      playSound(400, 0.1);
+      playSound(400, 0.15);
       setCount((prev) => prev - 1);
     }
   };
 
   const showResetModal = (): void => {
-    playSound(600, 0.1);
+    playSound(600, 0.15);
     setIsResetModalVisible(true);
   };
 
   const handleResetConfirm = (): void => {
-    playSound(500, 0.15);
+    playSound(500, 0.2);
     setCount(0);
     setIsResetModalVisible(false);
+    setIsDisabled(false);
+    setCooldownTime(0);
+    if (cooldownTimerRef.current) {
+      clearInterval(cooldownTimerRef.current);
+    }
   };
 
   const handleResetCancel = (): void => {
@@ -82,21 +127,26 @@ export default function StudyCounter({ maxCount = MAX_COUNT }: CounterProps) {
           </div>
         </div>
 
-        {/* Main Counter Button - Central Circle */}
-        <div className="flex justify-center py-8">
+        {/* Main Counter Button - Large Thumb-Sized Circle */}
+        <div className="flex flex-col items-center justify-center py-8 gap-3">
           <Button
             type="primary"
             shape="circle"
             size="large"
-            icon={<PlusOutlined style={{ fontSize: '48px' }} />}
+            icon={<PlusOutlined style={{ fontSize: '64px' }} />}
             onClick={handleIncrement}
-            disabled={count >= maxCount}
-            className="h-32 w-32 shadow-lg hover:scale-105 active:scale-95 transition-transform sm:h-36 sm:w-36"
+            disabled={count >= maxCount || isDisabled}
+            className="h-48 w-48 shadow-2xl hover:scale-105 active:scale-95 transition-transform sm:h-52 sm:w-52"
             style={{
-              backgroundColor: count >= maxCount ? '#d9d9d9' : '#722ed1',
-              borderColor: count >= maxCount ? '#d9d9d9' : '#722ed1',
+              backgroundColor: (count >= maxCount || isDisabled) ? '#d9d9d9' : '#722ed1',
+              borderColor: (count >= maxCount || isDisabled) ? '#d9d9d9' : '#722ed1',
             }}
           />
+          {isDisabled && cooldownTime > 0 && (
+            <p className="text-sm font-medium text-purple-600">
+              Wait {cooldownTime}s before next click
+            </p>
+          )}
         </div>
 
         {/* Control Buttons */}
